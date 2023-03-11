@@ -1,0 +1,65 @@
+import random
+
+# Define the possible moves
+moves = ["rock", "paper", "scissors"]
+
+# Define a function to generate the computer's move
+def computer_move():
+    return random.choice(moves)
+
+# Define a function to play one round of the game
+def play_round(player_move, computer_move):
+    if player_move == computer_move:
+        print("Tie!")
+        return 0
+    elif player_move == "rock" and computer_move == "scissors":
+        print("You win!")
+        return 1
+    elif player_move == "paper" and computer_move == "rock":
+        print("You win!")
+        return 1
+    elif player_move == "scissors" and computer_move == "paper":
+        print("You win!")
+        return 1
+    else:
+        print("Computer wins!")
+        return -1
+
+# Define a function to play a match against a bot
+def play_match(bot):
+    num_games = 0
+    num_wins = 0
+    while num_games < 5 or (num_wins / num_games) < 0.6:
+        player_move = input("Enter your move (rock/paper/scissors): ")
+        computer = globals()[bot]()
+        print("Computer chose", computer)
+        result = play_round(player_move, computer)
+        num_games += 1
+        num_wins += result
+    if num_wins > 2:
+        print("You won the match!")
+    else:
+        print("Sorry, you lost the match.")
+
+# Define some example bots
+def random_bot():
+    return random.choice(moves)
+
+def always_rock_bot():
+    return "rock"
+
+def always_paper_bot():
+    return "paper"
+
+def always_scissors_bot():
+    return "scissors"
+
+# Play a match against each bot
+print("Playing against random bot...")
+play_match("random_bot")
+print("Playing against always rock bot...")
+play_match("always_rock_bot")
+print("Playing against always paper bot...")
+play_match("always_paper_bot")
+print("Playing against always scissors bot...")
+play_match("always_scissors_bot")
